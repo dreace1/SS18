@@ -4,27 +4,42 @@ public class Euclid{
   //180904
 
   public static void main(String[] args) {
-    if(args.length != 2){
-            throw new IllegalArgumentException("2 Integer Werte verwenden");
-        }else{
-            int a = Integer.parseInt(args[0]);
-            int b = Integer.parseInt(args[1]);
-            System.out.println(euclid(a,b));
+    //Fehlerbehandlung
+    if(args.length == 2){
+      try{
+        //Versuche die Zahl zu parsen
+        int a = Integer.parseInt(args[0]); //Auslesen des ersten Parameters und Konvertierung von String in Integer
+        int b = Integer.parseInt(args[1]); //Auslesen des ersten Parameters und Konvertierung von String in Integer
+        if(a <= b){
+          System.out.println(euclid(a,b)); //Aufruf der euclid Methode
         }
-  }
+        else{
+          System.out.println("Der zweite Parameter sollte groesser oder gleich dem ersten sein!");
+        }
 
+      }
+      catch(NumberFormatException numberFormatException){
+        System.out.println("Parameter ist kein Integer");
+        return;
+      }
+    }
+
+    else{
+      System.out.println("Bitte geben Sie die Parameter richtig ein, z.B. java Euclid 264 846");
+    }
+  }
 
 
 
   public static int euclid(int a, int b)
   {
-    if ( a < 0 || b < 0 )
+    if ( a < 0 || b < 0 ) //Laut Aufgabenstellung duerfen keine negativen Integer gewaelt werden
     {
       throw new IllegalArgumentException( "Keine negativen Zahlen" );
     }
         else
     {
-      if(b==0)
+      if(b == 0) //Abbruchbedingung
     {
       return a;
     }
