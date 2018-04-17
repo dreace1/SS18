@@ -11,7 +11,7 @@ public class Euclid{
         int a = Integer.parseInt(args[0]); //Auslesen des ersten Parameters und Konvertierung von String in Integer
         int b = Integer.parseInt(args[1]); //Auslesen des ersten Parameters und Konvertierung von String in Integer
         if(a <= b){
-          System.out.println(euclid(a,b)); //Aufruf der euclid Methode
+          System.out.println("Der ggT lautet: " + euclid(a,b)); //Aufruf der euclid Methode
         }
         else{
           System.out.println("Der zweite Parameter sollte groesser oder gleich dem ersten sein!");
@@ -33,20 +33,17 @@ public class Euclid{
 
   public static int euclid(int a, int b)
   {
-    if ( a < 0 || b < 0 ) //Laut Aufgabenstellung duerfen keine negativen Integer gewaelt werden
-    {
-      throw new IllegalArgumentException( "Keine negativen Zahlen" );
+    if(a < 0 || b < 0){ //Laut Aufgabenstellung duerfen keine negativen Integer gewaelt werden
+      throw new IllegalArgumentException("Bitte einen positiven Wert angeben.");
     }
-        else
-    {
-      if(b == 0) //Abbruchbedingung
-    {
-      return a;
+    else{
+      if(b == 0){ //Abbruchbedingung
+        return a;
+      }
+      else{
+        return euclid(b, a%b);
+      }
     }
-      else
-    {
-      return euclid(b, a%b);
-    }
-    }
+
   }
 }
