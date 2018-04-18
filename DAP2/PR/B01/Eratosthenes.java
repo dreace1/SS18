@@ -1,4 +1,4 @@
-public class Eratosthenes{
+public class Eratosthenes{ //4Punkte
 
   //Hannes Rosenkranz
   //180904
