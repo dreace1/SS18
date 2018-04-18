@@ -1,4 +1,4 @@
-public class Euclid{
+public class Euclid{ //4Punkte
 
   //Hannes Rosenkranz
   //180904
