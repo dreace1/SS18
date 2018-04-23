@@ -7,10 +7,10 @@ public class GeometrischeSuche{
   public static void main(String[] args) {
     if(args.length == 2){
       try {
-        float para1 = Float.parseFloat(args[0]);
-        int para2 = Integer.parseInt(args[1]);
+        float para1 = Float.parseFloat(args[0]);  //Auslesen des ersten Parameters und Formatierung in Float
+        int para2 = Integer.parseInt(args[1]);    //Auslesen des zweiten Parame und Formatierung in Interger
 
-        if(para1 > 0 && para2 > 0 && para2 < 100){
+        if(para1 > 0 && para2 > 0){
           int[] array = new int[1000];
           int status = 1;
           long tStart, tEnd, msecs;           //Laufzeitmessung
@@ -18,7 +18,7 @@ public class GeometrischeSuche{
           fillArray("ab", array);              //Feld wird mit absteigender Reihenfolge gefuellt
           System.out.println("");
           System.out.println("Durchlaeufe: ");
-          while(status >= 1){
+          while(status >= 1){                   //Abbruchbedingung
             msecs = 0;
             for(int x = 0; x < para2; x++){
               tStart = System.currentTimeMillis(); //Zeitmessung wird gestartet
@@ -33,11 +33,11 @@ public class GeometrischeSuche{
             System.out.println("Status " + status + ": " + msecs + "ms" );
             status++;
 
-            if(msecs > para1*1000){
-              status = 0;
+            if(msecs > para1*1000){               //para1*1000 zur Errechnung der ms
+              status = 0;                         //Wenn  gegebenes Limit erreicht ist wird abgebrochen
             }
             else{
-              array = new int[array.length*2];
+              array = new int[array.length*2];   //sonst wird die Länge des Arrays verdoppelt
               fillArray("ab", array);
             }
           }
@@ -47,7 +47,7 @@ public class GeometrischeSuche{
           //Errechnen des Mittelwertes
           int right = array.length;
           int left = array.length/2;
-          int tmpArraySize = ((right - left)/2) + left; //zur Positionierung wird der kleinere Wert addiert
+          int tmpArraySize = ((right - left)/2) + left; //zur Positionierung wird der kleinere Wert addiert (3.3.4)
 
           int start = 0;
           int status2 = 1;
@@ -67,18 +67,18 @@ public class GeometrischeSuche{
               msecs = tEnd - tStart;
             }
             msecs = msecs / para2;
-            if(msecs < (para1*1000)+50 && msecs > (para1*1000)-50){
+            if(msecs < (para1*1000)+50 && msecs > (para1*1000)-50){  //+- 50 fuer die ms Toleranz
               System.out.println("Status " + status2 + ": " + msecs + "ms, " + array.length + "Felder");
               System.out.println("Ergebnis: " + array.length + "Felder, diese werden in " + msecs/1000 + "," + (msecs/100)%10 + "s durlaufen");
               status2 = 0;
             }
-            else if (msecs < para1*1000){
+            else if (msecs < para1*1000){ //falls die ms kleiner sind und man in den rechten Teil geht
               System.out.println("Status " + status2 + ": " + msecs + "ms, " + array.length + "Felder");
               left = tmpArraySize;
               tmpArraySize = ((right - left)/2) + left;
               status2++;
             }
-            else if (msecs > para1*1000){
+            else if (msecs > para1*1000){ //falls die ms kleiner sind ung man in den linken Teil geht
               System.out.println("Status " + status2 + ": " + msecs + "ms, " + array.length + "Felder");
               right = tmpArraySize;
               tmpArraySize = ((right - left)/2) + left;
