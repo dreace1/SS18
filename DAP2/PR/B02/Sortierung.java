@@ -69,9 +69,9 @@ public class Sortierung{
           tEnd = System.currentTimeMillis();
         }
       }
-      else{
-        int[] tmpArr = new int[feld.length]; //Hilfarray fuer mergeSort
-        System.out.println("mergeSort");     //Falls merge angegeben wurde, wird mit mergeSort sortiert
+      else{                                  //Falls kein 2. Parameter angegeben wurde soll mit mergeSort sortiert werden
+        int[] tmpArr = new int[feld.length];
+        System.out.println("mergeSort");     
         tStart = System.currentTimeMillis();
         mergeSort(feld, tmpArr, 0, feld.length-1);
         tEnd = System.currentTimeMillis();
