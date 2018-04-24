@@ -51,22 +51,28 @@ public class Sortierung{
 
 
       //Laufzeitmessung starten
-      tStart = System.currentTimeMillis();
+      tStart = 0;
+      tEnd = 0;
 
       //Sortierung
       if(args.length > 1){
         if(args[1].equals("insert")){         //Falls insert angegeben wurde wird mit insertionSort sortiert
           System.out.println("insertionSort");
+          tStart = System.currentTimeMillis();
           insertionSort(feld);
+          tEnd = System.currentTimeMillis();
         }
         else if(args[1].equals("merge")){
+          int[] tmpArr = new int[feld.length];
           System.out.println("mergeSort");    //Falls merge angegeben wurde, wird mit mergeSort sortiert
-          mergeSort(feld, 0, feld.length-1);
+          tStart = System.currentTimeMillis();
+          mergeSort(feld, tmpArr, 0, feld.length-1);
+          tEnd = System.currentTimeMillis();
         }
       }
 
       //Laufzeitmessung stoppen
-      tEnd = System.currentTimeMillis();
+      //tEnd = System.currentTimeMillis();
 
       //Zeitdifferenz berechnen
       msecs = tEnd - tStart;
@@ -121,45 +127,41 @@ public class Sortierung{
   }
 
   //Aufgabe 2
-  public static void mergeSort(int[] array, int p, int r){
-    if(p < r){
-      int q = (p + r) / 2;                 //Mitte berechnen
-      mergeSort(array, p, q);              //Sortiere linke Haelfte
-      mergeSort(array, q + 1, r);          //Sortiere rechte Haelfte
-      merge(array, p, q, r);               //Zusammfuehren der sortierten Haelften
+  public static void mergeSort(int[] array, int[] tmpArr, int left, int right){
+    if(left < right){
+      int q =(left+right) / 2;               //Mitte berechnen
+      mergeSort(array, tmpArr, left, q);     //Sortiere linke Haelfte
+      mergeSort(array, tmpArr, q+1, right);  //Sortiere rechte Haelfte
+      merge(array, tmpArr, left, q, right);  //Zusammfuehren der Haelften
     }
   }
 
   //Hilfsmethode zum Zusammfuehren der sortierten Haelften
-  public static void merge(int[] array, int p, int q, int r){
-    int[] arr = new int[array.length];     //Hilfsarray mit der Laenge des vorgegebenen arrays
+  public static void merge(int[] arr, int[] tmpArr, int left, int q, int right){
+    int tmpLeft = left;
+    int tmpMid  = q+1;
 
-    for(int i = p; i <= r; i++){
-      arr[i] = array[i];                   //Einfuegen der werde des vorgegebenen arrays
-    }
-
-    int i = p;
-    int j = q + 1;
-    int k = p;
-
-    //Einfuegen der kleinsten Werte von Links und Rechts in das vorgegebene Array
-    while(i <= q && j <= r){
-      if(arr[i] <= arr[j]){                //Falls das erste Objekt aus der linken Haelfte kleiner oder gleich ist, wird die linke Schranke erhoeht
-        array[k] = arr[i];
-        i++;
+    for(int i = left; i <= right; ++i){
+      if(tmpLeft <= q && tmpMid <= right){   //Pruefen ob tmpLeft und tmpRight in ihrem Bereich liegen
+        if(arr[tmpLeft] < arr[tmpMid]){
+          tmpArr[i] = arr[tmpLeft++];        //Vergleichen und einfuegen der werte in das Hilfarray
+        }
+        else{
+          tmpArr[i] = arr[tmpMid++];
+        }
+      }
+      else if(tmpLeft <= q){                 //Wenn tmpLeft oder tmpRight ausserhalb ihrers Bereiches liegen wird das array
+        tmpArr[i] = arr[tmpLeft++];          //mit den restlichen Werten gefuellt
       }
       else{
-        array[k] = arr[j];                //Sonst wird die rechte Schranke erhoeht
-        j++;
+        tmpArr[i] = arr[tmpMid++];
       }
-      k++;                                //Alle Stellen vor k sind sortiert
     }
-    //Der Rest der linken Haelfte wird in das vorgegebene Array eingefuegt
-    while(i <= q){
-      array[k] = arr[i];
-      k++;
-      i++;
+    for(int i = left; i <= right; ++i){      //das Array wird mit den sortierten Werten gefuellt
+      arr[i] = tmpArr[i];
     }
+
   }
+
 
 }
