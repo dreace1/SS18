@@ -50,7 +50,6 @@ public class Sortierung{
       }
 
 
-      //Laufzeitmessung starten
       tStart = 0;
       tEnd = 0;
 
@@ -58,27 +57,33 @@ public class Sortierung{
       if(args.length > 1){
         if(args[1].equals("insert")){         //Falls insert angegeben wurde wird mit insertionSort sortiert
           System.out.println("insertionSort");
-          tStart = System.currentTimeMillis();
+          tStart = System.currentTimeMillis(); //Laufzeitmessung starten
           insertionSort(feld);
-          tEnd = System.currentTimeMillis();
+          tEnd = System.currentTimeMillis();   //Laufzeitmessung stoppen
         }
-        else if(args[1].equals("merge")){
-          int[] tmpArr = new int[feld.length];
-          System.out.println("mergeSort");    //Falls merge angegeben wurde, wird mit mergeSort sortiert
+        else{
+          int[] tmpArr = new int[feld.length]; //Hilfarray fuer mergeSort
+          System.out.println("mergeSort");     //Falls merge angegeben wurde, wird mit mergeSort sortiert
           tStart = System.currentTimeMillis();
           mergeSort(feld, tmpArr, 0, feld.length-1);
           tEnd = System.currentTimeMillis();
         }
       }
+      else{
+        int[] tmpArr = new int[feld.length]; //Hilfarray fuer mergeSort
+        System.out.println("mergeSort");     //Falls merge angegeben wurde, wird mit mergeSort sortiert
+        tStart = System.currentTimeMillis();
+        mergeSort(feld, tmpArr, 0, feld.length-1);
+        tEnd = System.currentTimeMillis();
+      }
 
-      //Laufzeitmessung stoppen
-      //tEnd = System.currentTimeMillis();
+
 
       //Zeitdifferenz berechnen
       msecs = tEnd - tStart;
 
       //Zeit ausgeben
-      System.out.println("Die Laufzeit lautet: " + msecs);
+      System.out.println("Die Laufzeit lautet: " + msecs + " ms");
 
       //Ausgabe des Feldes falls das erste Argument kleiner als 100 ist
       if(para1 <= 100){
