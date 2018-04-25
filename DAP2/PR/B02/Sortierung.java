@@ -1,4 +1,4 @@
-public class Sortierung{
+public class Sortierung{//1. 4P, 2. 4P
 
   //Hannes Rosenkranz
   //180904
@@ -6,6 +6,7 @@ public class Sortierung{
 
 
   public static void main(String[] args) {
+    if(args.length > 0){
     try{
 
       //Zufallszahlen
@@ -40,13 +41,14 @@ public class Sortierung{
         }
         //Aufgabe2
       }
-      else if(args.length == 1){              //Fall 4: kein zweiter Parameter, das Feld wird mit Zufallszahlen gefuellt
+      else if(args.length == 1 || args.length == 2){              //Fall 4: kein zweiter Parameter, das Feld wird mit Zufallszahlen gefuellt
         for(int a = 0; a < para1; a++){
           feld[a] = numberGenerator.nextInt();
         }
       }
       else if(args.length < 1){
         System.out.println("Geben Sie die Parameter richtig ein, z.B. java Sortierung 1000 rand bzw. java Sortierung 1000 merge rand");
+        return;
       }
 
 
@@ -71,7 +73,7 @@ public class Sortierung{
       }
       else{                                  //Falls kein 2. Parameter angegeben wurde soll mit mergeSort sortiert werden
         int[] tmpArr = new int[feld.length];
-        System.out.println("mergeSort");     
+        System.out.println("mergeSort");
         tStart = System.currentTimeMillis();
         mergeSort(feld, tmpArr, 0, feld.length-1);
         tEnd = System.currentTimeMillis();
@@ -104,6 +106,11 @@ public class Sortierung{
       System.out.println("Ungueltige Angabe! Bitte ganze Zahl angeben.");
       return;
     }
+  }
+  else{
+    System.out.println("Geben Sie die Parameter richtig ein, z.B. java Sortierung 1000 rand bzw. java Sortierung 1000 merge rand");
+
+  }
 
   }
 
@@ -114,11 +121,11 @@ public class Sortierung{
     for(int j = 1; j < array.length; j++){
       key = array[j];
       i = j-1;
-      while(i >= 0 && array[i] > key){
-        array[i+1] = array[i];
+      while(i >= 0 && array[i] > key){ //Fuer jedes Element welches vor der j-ten Stelle liegt wird der Nachfolger als aktuelle Element
+        array[i+1] = array[i];         //gewaelt solange es groesser ist
         i = i-1;
       }
-      array[i+1] = key;
+      array[i+1] = key;               //zum schluss muss key noch ein ites Element weiter gesetzt werden
     }
   }
 
@@ -142,28 +149,28 @@ public class Sortierung{
   }
 
   //Hilfsmethode zum Zusammfuehren der sortierten Haelften
-  public static void merge(int[] arr, int[] tmpArr, int left, int q, int right){
+  public static void merge(int[] array, int[] tmpArr, int left, int q, int right){
     int tmpLeft = left;
     int tmpMid  = q+1;
 
     for(int i = left; i <= right; ++i){
-      if(tmpLeft <= q && tmpMid <= right){   //Pruefen ob tmpLeft und tmpRight in ihrem Bereich liegen
-        if(arr[tmpLeft] < arr[tmpMid]){
-          tmpArr[i] = arr[tmpLeft++];        //Vergleichen und einfuegen der werte in das Hilfarray
+      if(tmpLeft <= q && tmpMid <= right){     //Pruefen ob tmpLeft und tmpRight in ihrem Bereich liegen
+        if(array[tmpLeft] < array[tmpMid]){
+          tmpArr[i] = array[tmpLeft++];        //Vergleichen und einfuegen der Werte in das Hilfsarray
         }
         else{
-          tmpArr[i] = arr[tmpMid++];
+          tmpArr[i] = array[tmpMid++];
         }
       }
-      else if(tmpLeft <= q){                 //Wenn tmpLeft oder tmpRight ausserhalb ihrers Bereiches liegen wird das array
-        tmpArr[i] = arr[tmpLeft++];          //mit den restlichen Werten gefuellt
+      else if(tmpLeft <= q){                   //Wenn tmpLeft oder tmpRight ausserhalb ihrers Bereiches liegen wird das array
+        tmpArr[i] = array[tmpLeft++];          //mit den restlichen Werten gefuellt
       }
       else{
-        tmpArr[i] = arr[tmpMid++];
+        tmpArr[i] = array[tmpMid++];
       }
     }
     for(int i = left; i <= right; ++i){      //das Array wird mit den sortierten Werten gefuellt
-      arr[i] = tmpArr[i];
+      array[i] = tmpArr[i];
     }
 
   }
