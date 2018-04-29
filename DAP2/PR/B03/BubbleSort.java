@@ -1,26 +1,24 @@
 public class BubbleSort{
 
   public static void main(String[] args) {
-    if(args.length == 1){
+    if(args.length == 0){
       try {
-        String para1 = args[0];
-        if(para1.equals("start")){
-          int[] array = new int[5000];
-          long tStart, tEnd, msecs;
-          fillArray("ab", array);
-          tStart = System.currentTimeMillis();
-          bubbleSort(array);
-          tEnd = System.currentTimeMillis();
-          msecs = tEnd - tStart;
-          System.out.println("Die Laufzeit von bubbleSort auf einem Array mit 5000 Elemente mit absteigender Reihenfolge betraegt: " + msecs + "ms");
-        }
-        else{
-          System.out.println("Bitte geben sie start an um das Programm zu starten");
-        }
+        int[] array = new int[5000];
+        long tStart, tEnd, msecs;
+        fillArray("ab", array);
+        tStart = System.currentTimeMillis();
+        bubbleSort(array);
+        tEnd = System.currentTimeMillis();
+        msecs = tEnd - tStart;
+        System.out.println("Die Laufzeit von bubbleSort auf einem Array mit 5000 Elemente mit absteigender Reihenfolge betraegt: " + msecs + "ms");
+
       } catch(IllegalArgumentException e) {
-        System.out.println("Bitte geben sie start an um das Programm zu starten");
+        System.out.println("Fehler bei der Eingabe, bitte keinen zusaetzlichen Parameter angeben.");
         return;
       }
+    }
+    else{
+      System.out.println("Fehler bei der Eingabe, bitte keinen zusaetzlichen Parameter angeben.");
     }
   }
 

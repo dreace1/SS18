@@ -5,12 +5,11 @@ public class GeometrischeSuche{
 
 
   public static void main(String[] args) {
-    if(args.length == 2){
+    if(args.length == 1){
       try {
         float para1 = Float.parseFloat(args[0]);  //Auslesen des ersten Parameters und Formatierung in Float
-        int para2 = Integer.parseInt(args[1]);    //Auslesen des zweiten Parame und Formatierung in Interger
 
-        if(para1 > 0 && para2 > 0){
+        if(para1 > 0){
           int[] array = new int[1000];
           int status = 1;
           long tStart, tEnd, msecs;           //Laufzeitmessung
@@ -20,16 +19,14 @@ public class GeometrischeSuche{
           System.out.println("Durchlaeufe: ");
           while(status >= 1){                   //Abbruchbedingung
             msecs = 0;
-            for(int x = 0; x < para2; x++){
-              tStart = System.currentTimeMillis(); //Zeitmessung wird gestartet
-              bubbleSort(array);
-              tEnd = System.currentTimeMillis(); //Zeitmessung wird gestoppt
+            tStart = System.currentTimeMillis(); //Zeitmessung wird gestartet
+            bubbleSort(array);
+            tEnd = System.currentTimeMillis(); //Zeitmessung wird gestoppt
 
-              boolean check = isSorted(array);
-              assert check : "Fehler bei der finalen Uebgergabe des Algorithmus"; //Assert zum Ueberpruefen ob der Algorithmus nach Plan verlief
-              msecs = tEnd - tStart;
-            }
-            msecs = msecs / para2;                //Berechnen der Toleranz
+            boolean check = isSorted(array);
+            assert check : "Fehler bei der finalen Uebgergabe des Algorithmus"; //Assert zum Ueberpruefen ob der Algorithmus nach Plan verlief
+            msecs = tEnd - tStart;
+
             System.out.println("Status " + status + ": " + msecs + "ms" );
             status++;
 
@@ -45,6 +42,7 @@ public class GeometrischeSuche{
           System.out.println("");
 
           //Errechnen des Mittelwertes
+          //BinaereSuche
           int right = array.length;
           int left = array.length/2;
           int tmpArraySize = ((right - left)/2) + left; //zur Positionierung wird der kleinere Wert addiert (3.3.4)
@@ -57,16 +55,14 @@ public class GeometrischeSuche{
             array = new int[tmpArraySize];
             fillArray("ab", array);
             msecs = 0;
-            for(int x = 0; x < para2; x++){
-              tStart = System.currentTimeMillis();
-              bubbleSort(array);
-              tEnd = System.currentTimeMillis();
+            tStart = System.currentTimeMillis();
+            bubbleSort(array);
+            tEnd = System.currentTimeMillis();
 
-              boolean check = isSorted(array);
-              assert check : "Fehler bei der finalen Uebgergabe des Algorithmus.";
-              msecs = tEnd - tStart;
-            }
-            msecs = msecs / para2;
+            boolean check = isSorted(array);
+            assert check : "Fehler bei der finalen Uebgergabe des Algorithmus.";
+            msecs = tEnd - tStart;
+
             if(msecs < (para1*1000)+50 && msecs > (para1*1000)-50){  //+- 50 fuer die ms Toleranz
               System.out.println("Status " + status2 + ": " + msecs + "ms, " + array.length + "Felder");
               System.out.println("Ergebnis: " + array.length + "Felder, diese werden in " + msecs/1000 + "," + (msecs/100)%10 + "s durlaufen");
@@ -125,8 +121,8 @@ public class GeometrischeSuche{
     return true;
   }
 
-  public static boolean partSorted(int[] array, int loc){
-    for(int i = array.length-1; i > loc; i--){
+  public static boolean partSorted(int[] array, int pos){
+    for(int i = array.length-1; i > pos; i--){
       if(array[i] < array[i-1]){
         return false;
       }
