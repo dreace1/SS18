@@ -1,8 +1,10 @@
 public class Point{
 
+  //Globale Variabeln fuer das Objekt Point
   private double arr[];
   private int dim;
 
+  //Konstruktor
   public Point(int d, double... values){
 
     if(values != null){
@@ -10,7 +12,7 @@ public class Point{
       arr = values;
     }
     else{
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Es wurden fehlerhafte Parameter Uebergeben");
     }
   }
 
@@ -19,7 +21,7 @@ public class Point{
       return arr[i];
     }
     else{
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Es wurde ein falscher Index angegeben");
     }
   }
 
