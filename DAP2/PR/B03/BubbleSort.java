@@ -27,7 +27,7 @@ public class BubbleSort{
 
 
 
-  public static int[] bubbleSort(int[] array){
+  public static void bubbleSort(int[] array){
     int n = array.length;
 
     for(int i = 1; i < n; i++){               //Schleife fuer gesamte Laenge des Arrays
@@ -41,7 +41,6 @@ public class BubbleSort{
       boolean check = partSorted(array,((array.length-1)-i)); //Es wird mit Assertions geprueft ob der Algorithmus richtig Funktioniert
       assert check : "Fehler bei dem Algorithmus";
     }
-    return array;
   }
 
   public static boolean isSorted(int[] array){

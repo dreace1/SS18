@@ -2,6 +2,9 @@ public class GeometrischeSuche{
 
   //Hannes Rosenkranz
   //180904
+  //P13	Mi 12–14	OH12-3.033	Niklas Sommerhage
+
+  //A1 4P. A2 4P.
 
 
   public static void main(String[] args) {
@@ -41,13 +44,13 @@ public class GeometrischeSuche{
 
           System.out.println("");
 
-          //Errechnen des Mittelwertes
           //BinaereSuche
           int right = array.length;
           int left = array.length/2;
-          int tmpArraySize = ((right - left)/2) + left; //zur Positionierung wird der kleinere Wert addiert (3.3.4)
+          //Man errechnet die Differenz teilt diese durch zwei um so an den Mittelwert zu kommen und um diesen zwischen
+				  //den Werten zu positionieren wir der kleinere addiert
+          int tmpArraySize = ((right - left)/2) + left;
 
-          int start = 0;
           int status2 = 1;
           System.out.println("BinaereSuche gestartet.");
           System.out.println("Durchlaeufe: ");
@@ -71,17 +74,17 @@ public class GeometrischeSuche{
             else if (msecs < para1*1000){ //falls die ms kleiner sind und man in den rechten Teil geht
               System.out.println("Status " + status2 + ": " + msecs + "ms, " + array.length + "Felder");
               left = tmpArraySize;
-              tmpArraySize = ((right - left)/2) + left;
+              tmpArraySize = ((right - left)/2) + left; //Mittelwert linker Teil
               status2++;
             }
             else if (msecs > para1*1000){ //falls die ms kleiner sind ung man in den linken Teil geht
               System.out.println("Status " + status2 + ": " + msecs + "ms, " + array.length + "Felder");
               right = tmpArraySize;
-              tmpArraySize = ((right - left)/2) + left;
+              tmpArraySize = ((right - left)/2) + left; //Mittelwert rechter Teil
               status2++;
             }
             else{
-              System.out.println("lul");
+              System.out.println("Dieser Fall kann nicht erreicht werden.");
             }
           }
         }
@@ -93,9 +96,12 @@ public class GeometrischeSuche{
         return;
       }
     }
+    else{
+      System.out.println("Fehler bitte einen Float angeben!");
+    }
   }
 
-  public static int[] bubbleSort(int[] array){
+  public static void bubbleSort(int[] array){
     int n = array.length;
 
     for(int i = 1; i < n; i++){               //Schleife fuer gesamte Laenge des Arrays
@@ -109,7 +115,6 @@ public class GeometrischeSuche{
       boolean check = partSorted(array,((array.length-1)-i)); //Es wird mit Assertions geprueft ob der Algorithmus richtig Funktioniert
       assert check : "Fehler bei dem Algorithmus";
     }
-    return array;
   }
 
   public static boolean isSorted(int[] array){
