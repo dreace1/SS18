@@ -1,4 +1,4 @@
-class Triangle extends Simplex{
+public class Triangle extends Simplex{
 
   //Attribute fuer das Objekt Triangle
   int dim;
@@ -17,7 +17,7 @@ class Triangle extends Simplex{
   }
 
   public boolean validate(){
-    if(arr.length == 3){                                    //Pruefung ob drei Punkte vorhanden sind
+    if(arr.length == 3){                                                //Pruefung ob drei Punkte vorhanden sind
       if(arr[0].dim() == 2 && arr[1].dim() == 2 && arr[2].dim == 2){    //Pruefung ob diese eine Dimension von 2 haben
         return true;
       }

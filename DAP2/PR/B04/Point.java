@@ -1,4 +1,4 @@
-class Point{
+public class Point{
   //Point beschreibt einen Punkt im Vektorraum der reellen Zahlen hoch d
 
   //Attribute fuer das Objekt Point

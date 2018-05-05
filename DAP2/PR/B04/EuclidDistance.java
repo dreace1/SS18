@@ -1,4 +1,4 @@
-class EuclidDistance implements Distance{
+public class EuclidDistance implements Distance{
 
   //Methode zur errechnung der Euclidischen Distanz zwischen 2 Punkten
   public double distance(Point p1, Point p2){

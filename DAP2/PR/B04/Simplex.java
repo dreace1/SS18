@@ -1,4 +1,4 @@
-abstract class Simplex{
+public abstract class Simplex{
   //Simplex
 
   //Attribute fuer Simplex
@@ -23,24 +23,13 @@ abstract class Simplex{
   //Methode zur errechnung der Summe der Seitenlaengen
   public double perimeter(){
     double sum = 0.0;
-    //EuclidDistance dist = new EuclidDistance();
 
-
-    for(int i=0; i<points.length; ++i){
-                EuclidDistance eDist = new EuclidDistance();
-                for(int j=i+1; j<points.length; ++j){
-                    sum += eDist.distance(points[i], points[j]);
-                }
-            }
-
-
-
-
-    //for(int i = 0; i < points.length; i++){         //Errechnung des Abstandes zwischen den Einzelnen Punkten
-    //  sum += dist.distance(points[0], points[i+1]);
-    //}
-
-    //sum += dist.distance(points[0], points[points.length-1]); //Abstand des ersten und letzten Punktes
+    for(int i = 0; i < points.length; i++){
+      EuclidDistance eDist = new EuclidDistance();
+      for(int j = i+1; j < points.length; j++){
+        sum += eDist.distance(points[i], points[j]);
+      }
+    }
     return sum;
   }
 
