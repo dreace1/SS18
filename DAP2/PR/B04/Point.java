@@ -1,13 +1,14 @@
-public class Point{
+class Point{
+  //Point beschreibt einen Punkt im Vektorraum der reellen Zahlen hoch d
 
-  //Globale Variabeln fuer das Objekt Point
-  private double arr[];
-  private int dim;
+  //Attribute fuer das Objekt Point
+  double arr[];
+  int dim;
 
   //Konstruktor
   public Point(int d, double... values){
 
-    if(values != null){
+    if(values != null){ //Pruefung ob die Parameter richtig angegeben wurden
       dim = d;
       arr = values;
     }
@@ -16,6 +17,7 @@ public class Point{
     }
   }
 
+  //get Methoden
   public double get(int i){
     if(i >= 0 && i <= arr.length){
       return arr[i];
