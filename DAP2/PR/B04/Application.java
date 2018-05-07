@@ -1,5 +1,8 @@
 public class Application{
 
+  //Hannes Rosenkranz
+  //180904
+
   public static void main(String[] args){
 
   //Anlegen der Parameter

@@ -1,5 +1,8 @@
 public class QuickSort{
 
+  //Hannes Rosenkranz
+  //180904
+
   public static void main(String[] args) {
 
     if(args.length == 1){
@@ -44,7 +47,7 @@ public class QuickSort{
           //Sortierung Pruefen
           if(isSorted(arr)){
             System.out.println("Das Feld ist sortiert");
-            toString(arr);
+            //toString(arr);
           }
           else{
             System.out.print("Das Feld ist nicht sortiert");
@@ -52,14 +55,17 @@ public class QuickSort{
         }
         else{
           System.out.println("Der Parameter sollte groesser als 0 sein.");
+          return;
         }
       }
       catch (NumberFormatException e){
         System.out.println("Fehler bei der Parameteruebergabe");
+        return;
       }
     }
     else{
       System.out.println("Bitte geben Sie nur einen Interger an.");
+      return;
     }
 
 
