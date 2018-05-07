@@ -1,5 +1,8 @@
 public class Muenzen{
 
+  //Hannes Rosenkranz
+  //180904
+
   public static void main(String[] args) {
     if(args.length == 2){
       try {
@@ -37,14 +40,17 @@ public class Muenzen{
 
   }
 
+  //Muenzwechsel
   public static int[] change(int value, int[] currency){
     for(int i = 0; i < currency.length; i++){
       int count = 0;
 
+      //Solange man die Muenze von dem Betrag abziehen kann
       while(value - currency[i] >= 0){
         value -= currency[i];
         count++;
       }
+      //in count steht die Menge der aktuellen Muenze, die von dem Betrag abgezogen werden kann
       currency[i] = count;
     }
     return currency;
