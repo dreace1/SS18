@@ -1,9 +1,9 @@
 public abstract class Simplex{
-  //Simplex
+  //Simplex gibt die Eckpunkte an
 
   //Attribute fuer Simplex
-  int dim;
-  Point[] points;
+  private int dim;
+  private Point[] points;
 
   //Konstruktor
   public Simplex(int d, Point...points){
@@ -27,7 +27,7 @@ public abstract class Simplex{
     for(int i = 0; i < points.length; i++){
       EuclidDistance eDist = new EuclidDistance();
       for(int j = i+1; j < points.length; j++){
-        sum += eDist.distance(points[i], points[j]);
+        sum += eDist.distance(points[i], points[j]); //Errechnung des Umfangs fuer das Dreieck
       }
     }
     return sum;
@@ -42,8 +42,8 @@ public abstract class Simplex{
     return points;
   }
 
-  public Point get(int i){
-    if(i >= 0 && i <= points.length){
+  public Point getPoint(int i){
+    if(i >= 0 && i <= points.length){ //Pruefung ob sich der Index im richtigen Bereich befindet
       return points[i];
     }
     else{

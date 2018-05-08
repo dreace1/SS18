@@ -13,7 +13,7 @@ public class EuclidDistance implements Distance{
       return Math.sqrt(result);                             //Pythagoras
     }
     else{
-      throw new IllegalArgumentException("Punkte sollten nicht die gleiche Dimension haben");
+      throw new IllegalArgumentException("Die Punkte haben nicht die gleich Dimension.");
     }
   }
 

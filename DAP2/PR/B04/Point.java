@@ -2,8 +2,8 @@ public class Point{
   //Point beschreibt einen Punkt im Vektorraum der reellen Zahlen hoch d
 
   //Attribute fuer das Objekt Point
-  double arr[];
-  int dim;
+  private double arr[];
+  private int dim;
 
   //Konstruktor
   public Point(int d, double... values){
@@ -29,6 +29,10 @@ public class Point{
 
   public int dim(){
     return dim;
+  }
+
+  public double[] getValues(){
+    return arr;
   }
 
 

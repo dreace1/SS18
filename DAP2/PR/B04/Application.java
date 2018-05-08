@@ -30,6 +30,7 @@ public class Application{
     }
     catch (NumberFormatException e){
       System.out.println("Bitte geben Sie die Parameter richtig ein");
+      return;
     }
   }
   else if(args.length == 0){
@@ -45,6 +46,7 @@ public class Application{
   }
   else{
     System.out.println("Bitte geben Sie die Parameter richtig ein, z.B. java Application x1 y1 x2 y2 x3 y3 oder ohne Parameter");
+    return;
   }
 
   //Erzeugen der Punkte
@@ -61,6 +63,7 @@ public class Application{
     }
     else{
       System.out.println("Es wurde kein gueltiges Dreieck erstellt.");
+      return;
     }
   }
 
