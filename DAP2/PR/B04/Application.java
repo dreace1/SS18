@@ -3,6 +3,8 @@ public class Application{
   //Hannes Rosenkranz
   //180904
 
+  //4Punkte
+
   public static void main(String[] args){
 
   //Anlegen der Parameter

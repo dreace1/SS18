@@ -25,7 +25,7 @@ public abstract class Simplex{
     double sum = 0.0;
 
     for(int i = 0; i < points.length; i++){
-      EuclidDistance eDist = new EuclidDistance();
+      EuclidDistance eDist = new EuclidDistance();   //Pythagoras
       for(int j = i+1; j < points.length; j++){
         sum += eDist.distance(points[i], points[j]); //Errechnung des Umfangs fuer das Dreieck
       }
