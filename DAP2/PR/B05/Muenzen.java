@@ -20,7 +20,7 @@ public class Muenzen{
           toString(change(para2, w));                   //Ausgabe und Muenzwechsel
         }
         else if(para1.equals("Alternative")){
-          int[] w = {200, 100, 50, 20, 10, 5, 2, 1};
+          int[] w = {200, 100, 50, 20, 10, 5, 4, 2, 1};
           toString(change(para2, w));
         }
         else{
