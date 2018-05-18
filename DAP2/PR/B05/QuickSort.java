@@ -3,6 +3,8 @@ public class QuickSort{
   //Hannes Rosenkranz
   //180904
 
+  //4Punkte
+
   public static void main(String[] args) {
 
     if(args.length == 1){
