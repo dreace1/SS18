@@ -13,6 +13,7 @@ public class LCS{
         long tStart, tEnd, msecs;
 
         if(para1 >= 0){
+          //Erstellen der zwei Zufallsfolgen
           a = randStr(para1, new Random());
           b = randStr(para1, new Random());
 
@@ -25,7 +26,7 @@ public class LCS{
           tStart = System.currentTimeMillis();
 
           //Laengste gemeinsame Teilfolge berechnen
-          int[][] arr = lcs(a.toCharArray(), b.toCharArray());
+          int[][] table = lcs(a.toCharArray(), b.toCharArray());
 
           //Laufzeitmessung beenden
           tEnd = System.currentTimeMillis();
@@ -33,11 +34,12 @@ public class LCS{
           //Zeitdifferenz berechnen
           msecs = tEnd - tStart;
 
-          show(arr);
+          //Ausgabe der Tabelle
+          show(table);
 
           System.out.println("Die Laufzeit von LCS lautet: " + msecs + " ms");
 
-          System.out.println("Resulting String: " + StringSequence(arr, b.toString()));
+          System.out.println("Resulting String: " + StringSequence(table, b.toString()));
         }
         else{
           System.out.println("Bitte einen positiven Integer angeben");
