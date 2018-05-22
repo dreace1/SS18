@@ -24,7 +24,15 @@ public class Job implements Comparable<Job>{
   }
 
   public int compareTo(Job other){
-    return this.getDauer() - other.getDeadline();
+    if (this.getDeadline() < other.getDeadline()){
+      return -1;
+    }
+    else if(this.getDeadline() == other.getDeadline()){
+      return 0;
+    }
+    else{
+      return +1;
+    }
   }
 
 }

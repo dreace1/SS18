@@ -24,7 +24,15 @@ public class Interval implements Comparable<Interval>{
   }
 
   public int compareTo(Interval other){
-    return this.getEnd() - other.getEnd();
+    if (this.getEnd() < other.getEnd()){
+      return -1;
+    }
+    else if(this.getEnd() == other.getEnd()){
+      return 0;
+    }
+    else{
+      return +1;
+    }
   }
 
 }

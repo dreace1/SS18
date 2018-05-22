@@ -7,7 +7,7 @@ import java.util.Collections;
 
 public class Anwendung{
 
-  //Intervalscheduling aus der Vorlesung
+  //Intervalscheduling aus der Vorlesung, welches die Anfrage waehlt die am fruehesten fertig ist
   public static ArrayList<Interval> intervalScheduling(ArrayList<Interval> intervals){
 
     ArrayList<Interval> array = new ArrayList<Interval>();
@@ -44,23 +44,19 @@ public class Anwendung{
     return array;
   }
 
+  //Latenessscheduling welches die Reihenfolge waehlt die die maximale Verspaetung minimiert indem er die fruehesten Deadlines waehlt
   public static int[] latenessScheduling(ArrayList<Job> jobs){
     try{
-      //n um die Schleifenvariable zu erschaffen und um die l�nge f�r das erstellen des ausgabe arrays parat zuu haben
-		int n = jobs.size();
-		int[] ausgabe = new int[n];
-		deadlineCount = 0;
-		int z = 0;
-		//den gesamten array einmal durchlaufen
-		for(int i=0;i<n;i++){
-			ausgabe[i] = z;
-			z = z + jobs.get(i).getDauer();
-			//Die Deadline wird hoch gezählt
-			if(z - jobs.get(i).getDeadline() > deadlineCount){
-				deadlineCount = z - jobs.get(i).getDeadline();
-			}
-		}
-		return ausgabe;
+      if(!jobs.isEmpty()){
+        //Erstellen des Arrays anhand der anzahl von jobs
+        int[] arr = new int[jobs.size()];
+        int l = 0;
+        //Durchlaufen des Arrays
+        for(int i = 0; i < jobs.size(); i++){
+          arr[i] = l;
+          l += jobs.get(i).getDauer();
+        }
+        return arr;
       }
       else{
         throw new IllegalArgumentException("Es wurde ein leerer Job angegeben");
@@ -78,6 +74,48 @@ public class Anwendung{
     }
     return new int[0];
   }
+
+  //Hilfmethode zur Ausgabe einer Interval Arrays
+  public static void intervalArrAusgabe(ArrayList<Interval> arr) {
+		System.out.print("[");
+		for (int i = 0; i < arr.size(); i++){
+			if (i != arr.size() - 1){
+				System.out.print(arr.get(i).toString());
+				System.out.print(", ");
+			}
+      else{
+				System.out.print(arr.get(i).toString());
+			}
+		}
+		System.out.println("]");
+	}
+
+  //Hilfmethode zur Ausgabe eines Job int Arrays
+  public static void jobIntArrAusgabe(int[] arr) {
+		System.out.print("[");
+		for (int i = 0; i < arr.length-1; i++){
+			System.out.print(arr[i]);
+			System.out.print(", ");
+		}
+		System.out.print(arr[arr.length-1]);
+		System.out.println("]");
+	}
+
+  //Hilfmethode zur Ausgabe von einem Job Arrays
+	public static void jobArrAusgabe(ArrayList<Job> arr){
+		System.out.print("[");
+		for (int i = 0; i < arr.size(); i++){
+			if (i != arr.size() - 1){
+				System.out.print(arr.get(i).toString());
+				System.out.print(", ");
+			}
+      else{
+				System.out.print(arr.get(i).toString());
+			}
+		}
+		System.out.println("]");
+	}
+
 
   public static void main(String[] args) {
 
@@ -157,11 +195,11 @@ public class Anwendung{
           StringTokenizer st = new StringTokenizer(zeile, ",");
 
           //Start und Ende des Intervals
-          start = Integer.parseInt(st.nextToken());
-          end = Integer.parseInt(st.nextToken());
+          int dauer = Integer.parseInt(st.nextToken());
+          int deadline = Integer.parseInt(st.nextToken());
 
           //Interval erzeugen
-          job = new Job(start, end);
+          job = new Job(dauer, deadline);
 
           //hinzugefuegen an die Liste
           jList.add(job);
@@ -202,75 +240,48 @@ public class Anwendung{
     System.out.print("[");
 
     if(methode.equals("Interval")){
-
-      for(int i = 0; i < iList.size() - 1; i++){
-        System.out.print(iList.get(i).toString());
-        System.out.print(", ");
-      }
-      System.out.print(iList.get(iList.size()-1).toString());
-      System.out.print("]");
+      //Ausgabe der unsortierten Liste
+      intervalArrAusgabe(iList);
 
       //Sortiertes Interval ausgeben
       System.out.print("\n\nSortiert:");
 
       //Sortieren von Interval
       Collections.sort(iList);
-      System.out.print("\n[");
 
-      for(int i = 0; i < iList.size()-1; i++){
-        System.out.print(iList.get(i).toString());
-        System.out.print(", ");
-      }
-      System.out.print(iList.get(iList.size()-1).toString());
-      System.out.print("]");
+      //Ausgabe der sortierten Liste
+      System.out.print("\n");
+      intervalArrAusgabe(iList);
 
       //Ausgabe von Interval Scheduling
       ArrayList<Interval> scheduled = intervalScheduling(iList);
       System.out.print("\n\nBerechnetes Intervallscheduling:");
-      System.out.print("\n[");
 
-      for(int i = 0; i < scheduled.size()-1; i++){
-        System.out.print(scheduled.get(i).toString());
-        System.out.print(", ");
-      }
-      System.out.print(scheduled.get(scheduled.size()-1).toString());
-      System.out.print("]");
+      //Ausgabe der gescheduledten Liste
+      System.out.print("\n");
+      intervalArrAusgabe(scheduled);
     }
     else if(methode.equals("Lateness")){
+      //Ausgabe der unsortierten Liste
+      jobArrAusgabe(jList);
 
-      for(int i = 0; i < jList.size() - 1; i++){
-        System.out.print(jList.get(i).toString());
-        System.out.print(", ");
-      }
-      System.out.print(jList.get(jList.size()-1).toString());
-      System.out.print("]");
-
-
-      //Sortierten Job ausgeben
+      //Sortierten fuer Job ausgeben
       System.out.println("\n\nSortiert:");
 
-      //Sortieren von Job
+      //Sortieren der Liste
       Collections.sort(jList);
-      System.out.print("\n[");
 
-      for(int i = 0; i < jList.size()-1; i++){
-        System.out.print(jList.get(i).toString());
-        System.out.print(", ");
-      }
-      System.out.print(jList.get(jList.size()-1).toString());
-      System.out.print("]");
+      //Ausgabe der sortierten Liste
+      System.out.print("\n");
+      jobArrAusgabe(jList);
 
       //Ausgabe von Lateness Scheduling
       int[] latenessScheduled = latenessScheduling(jList);
       System.out.print("\n\nBerechnetes Latenessscheduling:");
-      System.out.print("\n[");
 
-      for(int i = 0; i < latenessScheduled.length-1; i++){
-        System.out.print(latenessScheduled[i]);
-        System.out.print(", ");
-      }
-      System.out.print(latenessScheduled[latenessScheduled.length-1]);
-      System.out.print("]");
+      //Ausgabe von der gescheduledten Liste
+      System.out.print("\n");
+      jobIntArrAusgabe(latenessScheduled);
 
       //Ausgabe Maximale Verspaetung
       int late = 0;
