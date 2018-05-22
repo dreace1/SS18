@@ -46,14 +46,21 @@ public class Anwendung{
 
   public static int[] latenessScheduling(ArrayList<Job> jobs){
     try{
-      if(!jobs.isEmpty()){
-        int[] arr = new int[jobs.size()];
-        int l = 0;
-        for(int i = 0; i < jobs.size(); i++){
-          arr[i] = l;
-          l += jobs.get(i).getDauer();
-        }
-        return arr;
+      //n um die Schleifenvariable zu erschaffen und um die l�nge f�r das erstellen des ausgabe arrays parat zuu haben
+		int n = jobs.size();
+		int[] ausgabe = new int[n];
+		deadlineCount = 0;
+		int z = 0;
+		//den gesamten array einmal durchlaufen
+		for(int i=0;i<n;i++){
+			ausgabe[i] = z;
+			z = z + jobs.get(i).getDauer();
+			//Die Deadline wird hoch gezählt
+			if(z - jobs.get(i).getDeadline() > deadlineCount){
+				deadlineCount = z - jobs.get(i).getDeadline();
+			}
+		}
+		return ausgabe;
       }
       else{
         throw new IllegalArgumentException("Es wurde ein leerer Job angegeben");
