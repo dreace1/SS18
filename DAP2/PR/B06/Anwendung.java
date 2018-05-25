@@ -7,6 +7,8 @@ import java.util.Collections;
 
 public class Anwendung{
 
+  //8Punkte
+
   //Intervalscheduling aus der Vorlesung, welches die Anfrage waehlt die am fruehesten fertig ist
   public static ArrayList<Interval> intervalScheduling(ArrayList<Interval> intervals){
 
