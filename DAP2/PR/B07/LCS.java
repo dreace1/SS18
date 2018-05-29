@@ -122,10 +122,13 @@ public class LCS{
     System.out.println();
   }
 
+  //Ausgabe der Teilfolge
   private static String StringSequence(int[][] table, String str){
     String result = "";
     int counter = 0;
+    //Durchlaufen der Tabelle
     for(int i = 1; i < str.length()+1; i++){
+      //Wenn ein Wert noch nicht aufgenommen wurde wird er hinzugefuegt
       if(table[i][i] > counter){
         result += str.charAt(i-1);
         counter++;
