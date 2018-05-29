@@ -86,7 +86,7 @@ public class LCS{
     for(int j = 0; j <= n; j++){
       a[0][j] = 0;
     }
-
+    //Initialisierung der Tabelle
     for(int i = 1; i <= m; i++){
       for(int j = 1; j <= n; j++)
       {
@@ -97,15 +97,17 @@ public class LCS{
   }
 
   public static void calculateLenght(char[] x, char[] y, int[][] a, int i, int j){
-    //Wenn die chars gleich sind wird das naechste groessere gewaelt
+    //Wenn die chars gleich sind wird das Feld auf den diagonalen Vorgaenger gesetzt
     if(x[i-1] == y[j-1]){
       a[i][j] = a[i-1][j-1]+1;
     }
     else{
+      //Wenn der linke Wert groesser ist als der oebere wird das neue Feld auf den groesseren gesetzt
       if(a[i-1][j] >= a[i][j-1]){
         a[i][j] = a[i-1][j];
       }
       else{
+        //Sonst wird wird das neue Feld auf den oberen groessten Wert gesetzt
         a[i][j] = a[i][j-1];
       }
     }
