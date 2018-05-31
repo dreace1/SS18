@@ -1,5 +1,8 @@
 import java.util.Random;
 
+//Hannes Rosenkranz
+//180904
+//4Punkte 4Punkte
 public class LCS{
   public static void main(String[] args) {
     if(args.length == 1){
@@ -37,9 +40,18 @@ public class LCS{
           //Ausgabe der Tabelle
           show(table);
 
+          //Ausgabe der Zeit
           System.out.println("Die Laufzeit von LCS lautet: " + msecs + " ms");
 
-          System.out.println("Resulting String: " + StringSequence(table, b.toString()));
+          String sequence = StringSequence(table, b.toString());
+
+          //Ausgabe der Teilfolge
+          if(sequence.length() == 0){
+            System.out.println("Es gibt keine Teilfolge.");
+          }
+          else{
+            System.out.println("Resulting String: " + sequence);
+          }
         }
         else{
           System.out.println("Bitte einen positiven Integer angeben");
