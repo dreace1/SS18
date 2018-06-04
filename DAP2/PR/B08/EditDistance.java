@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.util.LinkedList;
 
 public class EditDistance{
   public static void main(String[] args) {
@@ -17,22 +17,22 @@ public class EditDistance{
           System.out.println("Sequenz 2: " + para2);
           System.out.println();
 
-          int[][] table = distance(para1, para2);
-          show(table);
+          int[][] dist = distance(para1, para2);
+          show(dist);
 
-          //Ausgabe der Distanz
-          System.out.println("Die Distanz betraegt: " + table[table.length-1][table[0].length-1]);
+          //Ausgabe der Kosten
+          System.out.println("Die Kosten betragen: " + cost(dist));
 
         }
         else if(args.length == 3 && args[2].equals("-o")){
           String para1 = args[0];
           String para2 = args[1];
 
-          ArrayList<String> list = new ArrayList<String>();
-          list.add(para1);
-          list.add(para2);
-
-          printEditOperations(list);
+          //Ausgabe der Operationen
+          printEditOperations(para1, para2);
+        }
+        else{
+          System.out.println("Fehler: Bitte geben Sie entweder 2 Strings an oder 2 Strings und den Ausgabeparameter -o");
         }
       }
       catch (IllegalArgumentException e){
@@ -50,156 +50,54 @@ public class EditDistance{
   public static int[][] distance(String a, String b){
     int lengthA = a.length()+1;
     int lengthB = b.length()+1;
+    int cost;
     //Erstellen der Tabelle
-    int[][] table = new int[lengthA][lengthB];
+    int[][] dist = new int[lengthA][lengthB];
 
     //Fuellen der Spalten
     for(int i = 0; i < lengthA; i++){
-      table[i][0] = i;
+      dist[i][0] = i;
     }
 
     //Fuellen der Zeilen
     for(int j = 0; j < lengthB; j++){
-      table[0][j] = j;
+      dist[0][j] = j;
     }
 
     //Dynamischer Alg
     for(int i = 1; i < lengthA; i++){
       for(int j = 1; j < lengthB; j++){
-        table[i][j] = evaluate(a.charAt(i-1), b.charAt(j-1), table[i-1][j-1], table[i-1][j], table[i][j-1]);
-      }
-    }
-    //show(table);
-    //return table[table.length-1][table[0].length-1];
-    return table;
-  }
-
-  //Hilfsmethode zur Bestimmung des min
-  private static int min(int[] values){
-    int result = values[0];
-    for(int i = 1; i < values.length; i++){
-      if(result > values[i]){
-        result = values[i];
-      }
-    }
-    return result;
-  }
-
-  private static int evaluate(char a, char b, int... values){
-    if(a == b){
-      return values[0];
-    }
-    else{
-      return min(values)+1;
-    }
-  }
-
-  public static void printEditOperations(ArrayList<String> list){
-    //Strings der uerbergebenen Parameter
-    String a = list.get(0);
-    String b = list.get(1);
-
-    System.out.println("Loesung fuer \"" + a + "\" --> \"" + b + "\" mit Gesamtkosten " + distance(a, b) + ":");
-    System.out.println("===================================================");
-
-    //Variabel fuer den aktuellen Schritt
-    int step = 1;
-    int i = 0;
-
-    //Fehlerabfrage
-    if(a.length() < b.length()){
-      System.err.println("Fehler: der erste String ist kuerzer als der zweite String, bitte tauschen");
-      System.exit(1);
-
-    }
-
-    while(!a.equals(b)){
-      //Fall: Loeschen
-      if((a.length() - (a.length() - b.length())) == i && a.length() > b.length()){
-        a = delete(a, i);
-        System.out.println(step + ") Kosten 1: Loesche " + a.charAt(i-1) + " an Position " + (i+1) + " --> " + a);
-      }
-      else{
-        char charA = a.charAt(i);
-        char charB = b.charAt(i);
-
-        if(charA == charB){
-          System.out.println(step + ") Kosten 0: " + charA + " an Position " + (i+1) + " --> " + a);
-          i++;
-        }
-        else if(charA != charB && a.length()-i < 2 || b.length()-i < 2){
-          a = replace(a, i, charB);
-          System.out.println(step + ") Kosten 1: Ersetze " + charA + " durch " + charB + " an Position " + (i+1) + " --> " + a);
-          i++;
-        }
-        else if(charA != charB && b.charAt(i+1) == charA){
-          a = add(a, i, charB);
-          System.out.println(step + ") Kosten 1: Fuege " + charB + " an Position " + (i+1) + " ein --> " + a);
-          i++;
-        }
-        else if(charA != charB && a.charAt(i+1) == charB){
-          a = delete(a, i);
-          System.out.println(step + ") Kosten 1: Loesche " + charA + " an Position " + (i+1) + " --> " + a);
+        //Wenn a und b an dieser Position den gleichen Buchstaben haben betragen die Kosten 0
+        if(a.charAt(i-1) == b.charAt(j-1)){
+          cost = 0;
         }
         else{
-          a = replace(a, i, charB);
-          System.out.println(step + ") Kosten 1: Ersetze " + charA + " durch " + charB + " an Position " + (i+1) + " --> " + a);
+          cost = 1;
         }
-        step++;
+        //Bestimmen welches die geringsten Kosten hat, loeschen, einfuegen, tauschen
+        dist[i][j] = min(dist[i-1][j]+1, dist[i][j-1]+1, dist[i-1][j-1]+cost);
       }
+    }
+    return dist;
+  }
 
-      if(a.charAt(a.length()-1) == b.charAt(b.length()-1) && list.get(0).length() == list.get(1).length()){
-        System.out.println(step + ") Kosten 0: " + a.charAt(a.length()-1) + " an Position " + (i+1) + " --> " + a);
-        i++;
-      }
+  //Hilfsmethode zur Bestimmung des minimums von 3 Integer Werten
+  private static int min(int i, int j, int k) {
+    if(i<=j && i<=k){
+      return i;
+    }
+    else if(j<=k && j<=i){
+      return j;
+    }
+    else{
+      return k;
     }
   }
 
-    //Operationen:
-
-    //Ersetzen
-    private static String replace(String a, int index, char c){
-      String temp = "";
-
-      for(int i = 0; i < index; i++){
-        temp += a.charAt(i);
-      }
-      temp += c;
-
-      for(int i = index+1; i < a.length(); i++){
-        temp += a.charAt(i);
-      }
-      return temp;
-    }
-
-    //Loeschen
-    private static String delete(String a, int index){
-      String temp = "";
-
-      for(int i = 0; i < index; i++){
-        temp += a.charAt(i);
-      }
-
-      for(int i = index+1; i < a.length(); i++){
-        temp += a.charAt(i);
-      }
-      return temp;
-    }
-
-    //Einfuegen
-    private static String add(String a, int index, char c){
-      String temp = "";
-
-      for(int i = 0; i < index; i++){
-        temp += a.charAt(i);
-      }
-      temp += c;
-
-      for(int i = index; i < a.length(); i++){
-        temp += a.charAt(i);
-      }
-      return temp;
-    }
+  //Ausgabe der Kosten, also des Wertes ganz unten rechts in der Tabelle
+  private static int cost(int[][] dist){
+    return dist[dist.length-1][dist[0].length-1];
+  }
 
 
 
@@ -208,11 +106,90 @@ public class EditDistance{
   private static void show(int[][] a){
     System.out.println("Die Matrix der Editierdistanz von Sequenz 1 und 2: ");
     for(int i = 0; i  < a.length; i++){
-      for(int j = 0; j < a.length; j++){
+      for(int j = 0; j < a.length-1; j++){
         System.out.print("\t" + a[i][j]);
       }
       System.out.println();
     }
     System.out.println();
   }
+
+
+
+  //Ausgabe der verschiedenen Operationen
+  private static void printEditOperations(String a, String b){
+
+    //Tabelle der Editierdistanz
+    int[][] dist = distance(a, b);
+
+    //Ausgabe der Strings und der Kosten
+    System.out.println("Loesung fuer \"" + a + "\" --> \"" + b + "\" mit Gesamtkosten " + cost(dist) + ":");
+    System.out.println("===============================================================");
+
+    //ArrayListen fuer die Operationen
+    ArrayList<String> out = new ArrayList<String>();
+    ArrayList<Character> in = new ArrayList<Character>();
+
+    for(int i = 0; i < b.length(); i++){
+      in.add(b.charAt(i));
+    }
+
+    String step = "";
+
+    int i = a.length();
+    int j = b.length();
+
+    while(i > 0 && j > 0){
+      //Fall: Loeschen
+      if(dist[i-1][j] == min(dist[i-1][j], dist[i-1][j-1], dist[i][j-1]) && dist[i-1][j] < dist[i][j]){
+        step = "Kosten 1 : " + "Loesche " + a.charAt(i-1) + " an Position " + String.valueOf(j+1) + " --> " + in.toString();
+        in.add(j, a.charAt(i-1));
+        i--;
+      }
+      //Fall: veschieben
+      else if(dist[i-1][j-1] == min(dist[i-1][j], dist[i-1][j-1], dist[i][j-1])){
+        //vor dem verschieben wird geprueft ob es vorher ein character a[i-1] an der position j-1 war
+        if(dist[i-1][j-1] == dist[i][j]){
+          step = "Kosten 0 " + a.charAt(i-1) + " an Position " + String.valueOf(j) + " --> " + in.toString();
+        }
+        else{
+          step = "Kosten 1 " + "Ersetze " + a.charAt(i-1) + " durch " + in.get(j-1) + " an Position " + String.valueOf(j)
+                + " --> " + in.toString();
+          in.remove(j-1);
+          in.add(j-1, a.charAt(i-1));
+        }
+        i--;
+        j--;
+      }
+      //Fall: Einfuegen
+      else{
+        //Es war kein character vor dem einfuegen an der Stelle j-1. Der einzufuegende Wert sollte bei in[j-1] sein
+        step = "Kosten 1 " + " Fuege " + in.get(j-1) + " an Position " + String.valueOf(j) + " --> " + in.toString();
+        in.remove(j-1);
+        j--;
+      }
+      out.add(step);
+    }
+
+    while(i > 0){
+      step = "Kosten 1 : " + "Loesche " + a.charAt(i-1) + " an Position " + String.valueOf(j+1) + " --> " + in.toString();
+      in.add(a.charAt(i-1));
+      i--;
+      out.add(step);
+    }
+
+    while(j > 0){
+      step = "Kosten 1 " + " Fuege " + in.get(j-1) + " an Position " + String.valueOf(j) + " --> " + in.toString();
+      in.remove(j-1);
+      j--;
+      out.add(step);
+    }
+
+    //Finale Ausgabe der Operationen mit Schritten
+    for(int p = out.size()-1; p >= 0; p--){
+      System.out.println(String.valueOf(out.size()-p) + ") " + out.get(p));
+    }
+    System.out.println();
+  }
+
 }
