@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 //Hannes Rosenkranz
 //180904
-//
+//4Punkte 4Punkte
 
 public class EditDistance{
   public static void main(String[] args) {
@@ -184,8 +184,9 @@ public class EditDistance{
       out.add(step);
     }
 
+    //Sonderfaelle falls i oder j noch nicht 0 ist
     while(i > 0){
-      step = "Kosten 1 : " + "Loesche " + a.charAt(i-1) + " an Position " + String.valueOf(j+1) + " --> " + in.toString();
+      step = "Kosten 1: " + "Loesche " + a.charAt(i-1) + " an Position " + String.valueOf(j+1) + " --> " + in.toString();
       in.add(a.charAt(i-1));
       i--;
       out.add(step);
