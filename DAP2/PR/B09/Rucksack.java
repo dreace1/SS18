@@ -1,4 +1,7 @@
 public class Rucksack{
+  //Hannes Rosenkranz
+  //180904
+  //4P. 4P.
 
   public static void main(String[] args) {
     if(args.length == 3){
@@ -27,6 +30,8 @@ public class Rucksack{
           article[i] = new Article(
             numberGenerator.nextInt(900) + 100,
             numberGenerator.nextInt((int)Math.round(p*0.45))+ (int)Math.round(p*0.8));
+            System.out.println("Artikel: " + (i+1) + " , Wert: " + article[i].getValue() +
+                               ", Gewicht: " + article[i].getWeight());
         }
 
 
@@ -58,7 +63,7 @@ public class Rucksack{
 
         show(result);
 
-        System.out.println("Das Optimale Ergebnis betraegt: " + returnOptimalResult(result, article, W));
+        System.out.println("Das Optimale Ergebnis betraegt fuer die Werte: " + returnOptimalResult(result, article, W));
         System.out.println();
 
         System.out.println("Die Laufzeit von RucksackDynamic betraegt: " + msecs2 + " ms");
